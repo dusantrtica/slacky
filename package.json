@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dusantrtica/slacky#readme",
   "devDependencies": {
+    "create-react-app": "^3.4.1",
     "nodemon": "^2.0.4"
   }
 }
