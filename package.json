@@ -1,0 +1,22 @@
+{
+  "name": "slacky",
+  "version": "1.0.0",
+  "description": "Slacky app using namespaces and rooms (chat app)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dusantrtica/slacky.git"
+  },
+  "author": "Dusan Trtica",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dusantrtica/slacky/issues"
+  },
+  "homepage": "https://github.com/dusantrtica/slacky#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
