@@ -19,5 +19,9 @@
   "devDependencies": {
     "create-react-app": "^3.4.1",
     "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
   }
 }

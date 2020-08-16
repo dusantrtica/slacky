@@ -1,0 +1,25 @@
+@import '../../styles/base';
+.namespaces {
+    display: flex;
+    flex-flow: column;
+    width: 5%;
+    height: 100vh;
+    padding: 10px;
+    background-color: $namespaces-background;
+
+    .namespace {
+        display: block;
+        width: 60px;
+        height: 60px;
+        border: 1px solid;
+        border-radius: 20%;
+        text-align: center;
+        cursor: pointer;
+
+        margin-bottom: 10px;
+
+        &:hover {
+            color: red;            
+        }
+    }
+}
