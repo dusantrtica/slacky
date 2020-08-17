@@ -1,18 +1,17 @@
 import React from 'react';
 import './index.scss';
 
-const rooms = ['#team-rnd', '#team-schedule', '#social-random'];
 
 const Room = ({room}) => {
     return (
-        <div className="room">{room}</div>
+        <div className="room">{room.roomTitle}</div>
     )
 }
 
-const Rooms = () => {
+const Rooms = ({rooms = []}) => {
     return (
         <div className="rooms">
-            {rooms.map(room => <Room room={room} />)}
+            {rooms.map(room => <Room key={room.roomId} room={room} />)}
         </div>
     )
 }
