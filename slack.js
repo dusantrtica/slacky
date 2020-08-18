@@ -23,5 +23,25 @@ namespaces.forEach(namespace => {
     io.of(namespace.endpoint).on('connection', (nsSocket) => {
         console.log(`${nsSocket.id} has joined ${namespace.endpoint}`);
         nsSocket.emit('nsRoomLoad', namespace.rooms);
+        nsSocket.on('joinRoom', (roomToJoin, numberOfUsersCallback) => {
+            nsSocket.join(roomToJoin);
+            io.of(namespace.endpoint).in(roomToJoin).clients((err, clients) => {
+                console.log({clients});
+                numberOfUsersCallback(clients.length);
+            });            
+        });
+
+        nsSocket.on('newMessageToServer', (msg) => {
+            const fullMsg = {
+                text: msg,
+                time: Date.now(),
+                username: 'Dusan',
+                avatar: 'https://via.placeholder.com/30'
+            }
+            
+            const roomTitle = Object.keys(nsSocket.rooms)[1];
+            console.log(roomTitle);
+            io.of(namespace.endpoint).to(roomTitle).emit('messageToClients', fullMsg);
+        });
     })
 })

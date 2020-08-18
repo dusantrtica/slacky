@@ -2,16 +2,16 @@ import React from 'react';
 import './index.scss';
 
 
-const Room = ({room}) => {
+const Room = ({room, onClickRoom}) => {
     return (
-        <div className="room">{room.roomTitle}</div>
+        <div onClick={() => onClickRoom(room)} className="room">{room.roomTitle}</div>
     )
 }
 
-const Rooms = ({rooms = []}) => {
+const Rooms = ({rooms = [], onClickRoom}) => {
     return (
         <div className="rooms">
-            {rooms.map(room => <Room key={room.roomId} room={room} />)}
+            {rooms.map(room => <Room key={room.roomId} room={room} onClickRoom={onClickRoom} />)}
         </div>
     )
 }
