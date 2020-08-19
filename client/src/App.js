@@ -6,6 +6,8 @@ import Namespaces from './components/Namespaces';
 import Rooms from './components/Rooms';
 import ChatArea from './components/ChatArea';
 
+const username = prompt('What is your name?');
+
 function App() {
   const [socket, setSocket] = useState();
   const [nsSocket, setNsSocket] = useState();
@@ -18,7 +20,11 @@ function App() {
   const [messageToClients, setMessageToClients] = useState([]);
 
   useEffect(() => {
-    let s = socketIOClient('http://localhost:9000');
+    let s = socketIOClient('http://localhost:9000', {
+      query: {
+        username
+      }
+    });
     setSocket(s);
   }, []);
 
@@ -35,6 +41,9 @@ function App() {
 
   useEffect(() => {
     if(selectedNamespace) {
+      if(nsSocket) {
+        nsSocket.close();
+      }
       const { endpoint } = selectedNamespace;
       let s = socketIOClient('http://localhost:9000' + endpoint);
       setNsSocket(s);
@@ -68,21 +77,26 @@ function App() {
       nsSocket.emit('joinRoom', roomTitle, (newNumberOfMembers) => {
         setCurrentNumberOfUsers(newNumberOfMembers);
       });
+      nsSocket.on('historyCatchUp', history => {
+        setMessageToClients(history);
+      });
+
+      nsSocket.on('updateMembers', (numOfMembers) => {
+        setCurrentNumberOfUsers(numOfMembers);
+      })
     }
   }, [selectedRoom]);
 
   const handleClickSend = (text) => {
     nsSocket.emit('newMessageToServer', text);
   }
-
-  console.log({messageToClients});
   
   return (
     <div className="App">
      
       <Namespaces namespaces={namespaces} onClickNamespace={handleClickNamespace} selectedNamespace={selectedNamespace}/>
       <Rooms rooms={rooms} onClickRoom={handleClickRoom}/>
-      <ChatArea onClickSend={handleClickSend} messageToClients={messageToClients} />
+      <ChatArea  currentNumberOfUsers={currentNumberOfUsers} onClickSend={handleClickSend} messageToClients={messageToClients} />
     </div>
   );
 }
